@@ -1,0 +1,18 @@
+<page-header [title]="l('OrganizationUnits')"></page-header>
+
+
+
+<nz-row nzGutter="8">
+  <!-- 左边组织机构树 -->
+  <nz-col nzSpan="8">
+    <app-organization-unit-tree-panel #ouTree (selectedChange)="ouMembers.organizationUnit = $event"></app-organization-unit-tree-panel>
+  </nz-col>
+
+
+  <!-- 右边组织机构成员 -->
+  <nz-col nzSpan="16">
+    <app-organization-unit-members-panel #ouMembers (membersAdded)="ouTree.membersAdded($event)" (memberRemoved)="ouTree.memberRemoved($event)"></app-organization-unit-members-panel>
+
+
+  </nz-col>
+</nz-row>

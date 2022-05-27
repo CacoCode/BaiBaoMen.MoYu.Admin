@@ -1,0 +1,13 @@
+<nz-spin [nzTip]="l('LoadingWithThreeDot')" [nzSpinning]="loading">
+  <nz-input-group [nzSuffix]="suffixIcon">
+    <input type="text" nz-input [placeholder]="l('InXSearchPlaceHolder',l('PermissionDisplayName'))"
+      [(ngModel)]="filterText" (keyup.enter)="reload()" (ngModelChange)="filterTextEmptyChange()">
+  </nz-input-group>
+  <ng-template #suffixIcon>
+    <i class="anticon anticon-reload point" (click)="reload()" nz-tooltip [nzTitle]="l('Refresh')"></i>
+  </ng-template>
+
+  <nz-tree #nzTreePermission [(ngModel)]="_treeData" [nzSearchValue]="filterText" [nzCheckable]="true"
+    [nzShowLine]="false" [nzDefaultExpandAll]="true" [nzDefaultCheckedKeys]="defaultCheckedPermissionNames"
+    [nzCheckStrictly]="checkStrictly"></nz-tree>
+</nz-spin>

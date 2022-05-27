@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <div class="modal-title">
+    <i class="anticon anticon-share-alt mr-sm"></i>
+    <span>{{l("NotificationSettings")}}</span>
+  </div>
+</div>
+
+
+<h4>{{l("ReceiveNotifications")}}</h4>
+<label nz-checkbox [(ngModel)]="settings.receiveNotifications" name="receiveNotifications"></label>
+<span class="help-block">{{l("ReceiveNotifications_Definition")}}</span>
+
+<h4 *ngIf="settings.notifications&&settings.notifications.length">{{l("NotificationTypes")}}</h4>
+<p *ngIf="settings.notifications&&settings.notifications.length && !settings.receiveNotifications" class="text-danger">
+  <small>{{l("ReceiveNotifications_DisableInfo")}}</small>
+</p>
+
+<label nz-checkbox *ngFor="let item of settings.notifications" [(ngModel)]="item.isSubscribed"
+  [nzDisabled]="!settings.receiveNotifications">{{item.displayName}}</label>
+
+<!-- <form nz-form #validForm="ngForm" se-container="1" labelWidth="150" (ngSubmit)="save()" autocomplete="off">
+  <se label="分类名称" error="请填写">
+    <input type="text" nz-input [(ngModel)]="entity.name" name="name" required>
+  </se>
+  <se label="分类排序" error="请填写">
+    <nz-input-number [(ngModel)]="entity.orderId" name="orderId" required></nz-input-number>
+  </se>
+</form> -->
+
+
+<div class="modal-footer">
+  <button nz-button [nzType]="'default'" type="button" (click)="close($event)" [disabled]="saving">
+    <i class="anticon anticon-close-circle-o"></i>取消
+  </button>
+  <button nz-button [nzType]="'primary'" type="button" (click)="save()" [disabled]="saving" [nzLoading]="saving">
+    <i class="anticon anticon-save" *ngIf="!saving"></i>保存
+  </button>
+</div>

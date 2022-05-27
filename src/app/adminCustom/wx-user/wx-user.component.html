@@ -1,0 +1,123 @@
+<!-- 表格部分 -->
+<nz-card [nzBordered]="false">
+
+  <form nz-form [nzLayout]="'vertical'" (ngSubmit)="refreshGoFirstPage()" class="mb-md">
+    <!-- 模糊搜索框 -->
+    <nz-row nzGutter="8">
+      <nz-col nzSm="24">
+        <nz-input-group nzSearch [nzSuffix]="suffixSearchButton">
+          <input type="text" class="search" nz-input [(ngModel)]="filterText" (keyup.enter)="this.refreshGoFirstPage()"
+            name="filterText" [placeholder]="'名字'">
+          <ng-template #suffixSearchButton>
+            <button nz-button nzType="primary" nzSearch type="button" (click)="this.refreshGoFirstPage()">
+              <i class="anticon anticon-search"></i>
+            </button>
+          </ng-template>
+        </nz-input-group>
+      </nz-col>
+    </nz-row>
+  </form>
+
+  <div class="mb-md">
+    <!-- 操作按钮 -->
+    <nz-row nzGutter="8">
+      <nz-col nzMd="20" nzSm="12" class="btn-gutter">
+        <button nz-button [nzType]="'primary'" (click)="exportList()">
+          <i class="anticon anticon-file-excel"></i>
+          <span>
+            {{l("ExportToExcel")}}
+          </span>
+        </button>
+      </nz-col>
+
+    </nz-row>
+  </div>
+  <!-- 表格 -->
+  <div class="mb-md">
+    <nz-table #ajaxTable nzShowSizeChanger [nzData]="dataList" [nzTotal]="totalItems" [(nzPageIndex)]="pageNumber"
+      [(nzPageSize)]="pageSize" [nzLoading]="isTableLoading" (nzPageIndexChange)="pageNumberChange()"
+      (nzPageSizeChange)="refresh()" [nzShowSizeChanger]="true" [nzFrontPagination]="false"
+      [nzNoResult]="noDataTemplate" [nzShowTotal]="showTotalTemplate" [nzFrontPagination]="false"
+      [nzShowQuickJumper]="true">
+      <!-- 暂无数据 -->
+      <ng-template #noDataTemplate>
+        <!-- <no-data></no-data> -->
+        <nz-empty></nz-empty>
+      </ng-template>
+      <!-- 分页信息显示 当前 1 页/共 3 页，共 5 条/显示 1-2 条 -->
+      <ng-template #showTotalTemplate let-total let-range="range">
+        {{l('GridFooterDisplayText',pageNumber,totalPages,total,range[0],range[1])}}
+      </ng-template>
+      <!-- 表头 -->
+      <thead (nzSortChange)="gridSort($event)">
+        <tr>
+          <th nzWidth="20px" nzShowExpand></th>
+          <th>
+            <span>{{l('NickName')}}</span>
+          </th>
+          <th>
+            <span>{{l('MoYuCount')}}</span>
+          </th>
+          <th>
+            <span>{{l('Integral')}}</span>
+          </th>
+
+        </tr>
+      </thead>
+      <!-- 表格内容 -->
+
+      <tbody>
+        <ng-template ngFor let-item [ngForOf]="ajaxTable.data">
+          <tr>
+            <td nzShowExpand [(nzExpand)]="mapOfExpandData[item.id]"></td>
+            <td>
+              <ellipsis lines="1" nz-tooltip [nzTitle]="item.nickName">
+                <span> {{item.nickName}}</span>
+              </ellipsis>
+            </td>
+            <td>
+              <ellipsis lines="1" nz-tooltip [nzTitle]="item.moYuCount">
+                <span> {{item.moYuCount}}</span>
+              </ellipsis>
+            </td>
+            <td>
+              <ellipsis lines="1" nz-tooltip [nzTitle]="item.integral">
+                <span> {{item.integral}}</span>
+              </ellipsis>
+            </td>
+          </tr>
+          <tr [nzExpand]="mapOfExpandData[item.id]">
+            <td></td>
+            <td colspan="3">
+
+              <nz-timeline>
+                <nz-timeline-item nzColor="" [nzDot]="dotTemplate" *ngFor="let record of item.moYuRecords">
+                  <nz-tag [nzColor]="'green'">{{record.date}} {{record.hour}}</nz-tag>
+                  <nz-tag *ngIf="record.isWorkTime" [nzColor]="'#f50'">
+                    <span>工作时间</span>
+                   
+                  </nz-tag>
+                  <nz-tag *ngIf="!record.isWorkTime" [nzColor]="'#87d068'">
+                    <span >非工作时间</span>                   
+                  </nz-tag>
+                  <nz-tag [nzColor]="'#2db7f5'">本次打卡积分： {{record.integral}}</nz-tag>
+                  <span>{{record.desc}}</span> 
+                  <a *ngIf="!record.moYuType" target="_blank" style="margin-left: 10px;" [href]="record.imageUrl">照片</a>
+                  <ng-template #dotTemplate>
+                    <i *ngIf="!record.moYuType" nz-icon [type]="'photo'" theme="fill"></i>
+                    <i *ngIf="record.moYuType" nz-icon [type]="'step'" theme="fill"></i>
+                  </ng-template>
+                  
+                </nz-timeline-item>
+               
+              </nz-timeline>
+
+
+            </td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </nz-table>
+  </div>
+
+</nz-card>

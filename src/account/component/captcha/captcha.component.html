@@ -1,0 +1,8 @@
+<nz-col [nzSpan]="12">
+  <nz-input-group nzPrefixIcon="anticon anticon-picture">
+    <input nz-input name="captcha" [(ngModel)]="value" [placeholder]="placeholder" type="text" (click)="initImg()">
+  </nz-input-group>
+</nz-col>
+<nz-col [nzSpan]="12" class="text-right">
+  <img (click)="clearimg()" [src]="captchaUrl" *ngIf="captchaUrl">
+</nz-col>

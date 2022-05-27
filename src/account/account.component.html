@@ -1,0 +1,43 @@
+<div class="container">
+  <!-- #region logo和标题信息在背景图 -->
+  <div>
+    <!-- logo -->
+    <div>
+      <!-- <a [routerLink]="['/']">
+        <img class="logo" src="/assets/images/logos/logo.png">
+      </a> -->
+      <!-- <span class="title">Magicodes</span> -->
+    </div>
+
+    <!-- 标题信息 -->
+    <!-- <div class="account-slogon">
+      <p class="account-slogon-subhead">
+        <span>共享充电宝后台管理</span>
+      </p>
+    </div> -->
+  </div>
+
+  <!-- 租户切换 -->
+  <!-- <div *ngIf="showTenantChange()">
+    <tenant-change></tenant-change>
+  </div> -->
+
+
+  <router-outlet></router-outlet>
+
+<!-- #region 暂时先注释后期做处理 -->
+  <!-- 语言选择 -->
+  <!-- <div class="text-center">{{l('LanguageSelection')}}</div>
+  <account-languages></account-languages> -->
+
+<!-- #endregion -->
+
+  <!-- 底部信息 -->
+  <!-- <global-footer [links]="links">
+    Copyright
+    <i class="anticon anticon-copyright"></i> {{currentYear}}
+    <b>Version </b>{{versionText}}
+    <a href="http://magicodes.com.cn/" target="_blank">Magicodes</a>出品
+  </global-footer> -->
+
+</div>

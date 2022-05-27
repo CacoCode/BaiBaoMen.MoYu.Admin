@@ -1,0 +1,34 @@
+<div [@routerTransition]>
+  <nz-spin [nzTip]="l('PleaseWait')" [nzSpinning]="submitting">
+      <form nz-form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off" class="login-form">
+        <br>
+        <p class="account-title">
+          <span>鱼太闲后台管理</span>
+        </p>
+        <nz-form-item>
+          <p class="login-p"><i nz-icon [type]="'username'" theme="fill"></i>用户名</p>
+          <nz-form-control>
+            <nz-input-group>
+              <input class="login-input" nz-input name="userNameOrEmailAddress" #userNameOrEmailAddressInput="ngModel" [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress"
+                [placeholder]="l('UserNameOrEmail')" required maxlength="255">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+       
+        <nz-form-item>
+          <p class="login-p"><i nz-icon [type]="'password'" theme="fill"></i>密码</p>
+          <nz-form-control>
+            <nz-input-group>
+              <input  class="login-input"  nz-input name="password" #passwordInput="ngModel" [(ngModel)]="loginService.authenticateModel.password"
+                [placeholder]="l('Password')" type="password" required maxlength="32">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <button nz-button [nzType]="'primary'" [nzLoading]="submitting" class="login-btn" [disabled]="!loginForm.form.valid||submitting">
+        
+          <span>{{l("LogIn")}}</span>
+        </button>
+      </form>
+  </nz-spin>
+</div>
